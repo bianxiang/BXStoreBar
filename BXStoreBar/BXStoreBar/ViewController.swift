@@ -14,9 +14,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        bx.totalValue = 1000
+        //旧方法这样写要设置顺序，不好~
+//        bx.totalValue = 1000
+//        
+//        bx.currentValue = 300
         
-        bx.currentValue = 300
+        //故改为以下元组~
+        bx.value = (300,1000)
         
     }
 

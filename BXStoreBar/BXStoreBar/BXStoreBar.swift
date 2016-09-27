@@ -46,14 +46,20 @@ class BXStoreBar: UIView {
             self.backgroundColor = bottomColor
         }
     }
-    
+    var value:(current:Int,max:Int)!
+        {
+        didSet{
+            self.totalValue = self.value.max
+            self.currentValue = self.value.current
+        }
+    }
     var currentValue :Int! {
         didSet {
             
-            informationLabel.text = "\(currentValue) / \(totalValue) "
-            updateFrame()
+            informationLabel.text = "\(currentValue!) / \(totalValue!) "
+//            updateFrame()
             aboveView.frame.size.width = CGFloat(Double(currentValue) / Double(totalValue)) * self.frame.width
-            
+            layoutIfNeeded()
             
         }
     }
@@ -85,26 +91,32 @@ class BXStoreBar: UIView {
         self.layer.cornerRadius = 5.0
         self.layer.masksToBounds = true
         
-        self.backgroundColor = UIColor.grayColor()
+        self.backgroundColor = UIColor.gray
         
-        aboveView = UIView(frame:CGRectMake(0, 0, 0, self.frame.height))
-        aboveView.backgroundColor = UIColor.yellowColor()
+        aboveView = UIView(frame:CGRect(x: 0, y: 0, width: 0, height: self.frame.height))
+        aboveView.backgroundColor = UIColor.yellow
         self.addSubview(aboveView)
         
         informationLabel = UILabel()
         
         informationLabel.text = "0/0"
-        informationLabel.font = UIFont.systemFontOfSize(10)
+        informationLabel.font = UIFont.systemFont(ofSize: 10)
         informationLabel.textColor = UIColor(white: 0.8, alpha: 1)
-        updateFrame()
+//        updateFrame()
         
         aboveView.addSubview(informationLabel)
+        layoutIfNeeded()
     }
     
     
     func updateFrame(){
         informationLabel.sizeToFit()
-        informationLabel.center = CGPointMake(self.frame.width/2, self.frame.height/2)
+        informationLabel.center = CGPoint(x: self.frame.width/2, y: self.frame.height/2)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        updateFrame()
     }
 
 }
